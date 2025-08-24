@@ -4,7 +4,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{22EB034B-A47
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{D87BF5F7-8AD5-4360-9478-3FB47089B7E4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AcknowledgementShippingNotificationScanner", "src\AcknowledgementShippingNotificationScanner\AcknowledgementShippingNotificationScanner.csproj", "{A301D77B-736C-402B-9ED1-C5C7E3D71F4D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShippingAcknowledgementWorker", "src\ShippingAcknowledgementWorker\ShippingAcknowledgementWorker.csproj", "{A301D77B-736C-402B-9ED1-C5C7E3D71F4D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
