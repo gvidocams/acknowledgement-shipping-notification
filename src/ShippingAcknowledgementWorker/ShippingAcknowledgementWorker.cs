@@ -1,26 +1,27 @@
+using Core;
 using Microsoft.Extensions.Options;
 
 namespace ShippingAcknowledgementWorker;
 
 public class ShippingAcknowledgementWorker(
-    IShippingAcknowledgementService shippingAcknowledgementService,
-    IOptions<FileScanningOptions> fileScanningOptions,
+    IShippingAcknowledgementScanner shippingAcknowledgementScanner,
+    IOptions<AcknowledgementScanningOptions> acknowledgementScanningOptions,
     ILogger<ShippingAcknowledgementWorker> logger)
     : BackgroundService
 {
-    private readonly FileScanningOptions _fileScanningOptions = fileScanningOptions.Value;
+    private readonly AcknowledgementScanningOptions _acknowledgementScanningOptions = acknowledgementScanningOptions.Value;
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
         logger.LogInformation("{ServiceName} has been started", nameof(ShippingAcknowledgementWorker));
 
-        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(_fileScanningOptions.FilePathScanIntervalInSeconds));
+        using var timer = new PeriodicTimer(TimeSpan.FromSeconds(_acknowledgementScanningOptions.ScanIntervalInSeconds));
 
         while (await timer.WaitForNextTickAsync(stoppingToken))
         {
             logger.LogInformation("{ServiceName} is starting to process it's current interval", nameof(ShippingAcknowledgementWorker));
 
-            shippingAcknowledgementService.HandleShippingAcknowledgements();
+            shippingAcknowledgementScanner.ScanAndDispatchAcknowledgements();
 
             logger.LogInformation("{ServiceName} has completed the current interval", nameof(ShippingAcknowledgementWorker));
         }
