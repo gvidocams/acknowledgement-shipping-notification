@@ -24,4 +24,10 @@
       <ProjectReference Include="..\..\src\Core\Core.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Update="Data\multiple-boxes.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
