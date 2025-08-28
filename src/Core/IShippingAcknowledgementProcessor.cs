@@ -2,5 +2,5 @@ namespace Core;
 
 public interface IShippingAcknowledgementProcessor
 {
-    void ProcessShippingAcknowledgementNotification(string filePath);
+    Task ProcessShippingAcknowledgementNotification(string filePath);
 }

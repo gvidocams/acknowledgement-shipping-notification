@@ -6,7 +6,7 @@ var builder = Host.CreateApplicationBuilder(args);
 
 builder.Services.AddSingleton<IShippingAcknowledgementScanner, ShippingAcknowledgementScanner>();
 builder.Services.AddSingleton<IShippingAcknowledgementProvider, ShippingAcknowledgementProvider>();
-builder.Services.AddSingleton<IShippingAcknowledgementProcessor>();
+builder.Services.AddSingleton<IShippingAcknowledgementProcessor, ShippingAcknowledgementProcessor>();
 
 builder.Services.AddOptionsWithValidateOnStart<AcknowledgementScanningOptions>()
     .Bind(builder.Configuration.GetSection(AcknowledgementScanningOptions.SectionName))
