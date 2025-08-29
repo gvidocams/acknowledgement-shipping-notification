@@ -1,14 +1,17 @@
 using Core;
 using Infrastructure;
+using Infrastructure.Persistence;
 using ShippingAcknowledgementWorker;
 
 var builder = Host.CreateApplicationBuilder(args);
+
+builder.Services.AddInfrastructureServices(builder.Configuration);
 
 //TODO Fix service lifetimes
 builder.Services.AddSingleton<IShippingAcknowledgementScanner, ShippingAcknowledgementScanner>();
 builder.Services.AddSingleton<IShippingAcknowledgementProvider, ShippingAcknowledgementProvider>();
 builder.Services.AddSingleton<IShippingAcknowledgementProcessor, ShippingAcknowledgementProcessor>();
-builder.Services.AddSingleton<IShippingAcknowledgementRepository>();
+builder.Services.AddSingleton<IShippingAcknowledgementRepository, ShippingAcknowledgementRepository>();
 builder.Services
     .AddSingleton<IShippingAcknowledgementBoxProcessor, ShippingAcknowledgementBoxProcessor>(serviceProvider =>
     {

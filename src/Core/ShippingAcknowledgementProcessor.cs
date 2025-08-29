@@ -9,6 +9,7 @@ public class ShippingAcknowledgementProcessor(
 {
     public async Task ProcessShippingAcknowledgementNotification(string filePath)
     {
+        // TODO Create the channel capacity as configurable and validate it against the batch size
         var channel = Channel.CreateBounded<Box>(10); //TODO configure and optimize the capacity of the channel
 
         var acknowledgementWriterTask = shippingAcknowledgementParser.ParseShippingAcknowledgementNotification(channel.Writer, filePath);
