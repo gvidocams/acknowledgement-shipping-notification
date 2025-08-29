@@ -8,12 +8,12 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddInfrastructureServices(builder.Configuration);
 
 //TODO Fix service lifetimes
-builder.Services.AddSingleton<IShippingAcknowledgementScanner, ShippingAcknowledgementScanner>();
-builder.Services.AddSingleton<IShippingAcknowledgementProvider, ShippingAcknowledgementProvider>();
-builder.Services.AddSingleton<IShippingAcknowledgementProcessor, ShippingAcknowledgementProcessor>();
-builder.Services.AddSingleton<IShippingAcknowledgementRepository, ShippingAcknowledgementRepository>();
+builder.Services.AddScoped<IShippingAcknowledgementScanner, ShippingAcknowledgementScanner>();
+builder.Services.AddScoped<IShippingAcknowledgementProvider, ShippingAcknowledgementProvider>();
+builder.Services.AddScoped<IShippingAcknowledgementProcessor, ShippingAcknowledgementProcessor>();
+builder.Services.AddScoped<IShippingAcknowledgementRepository, ShippingAcknowledgementRepository>();
 builder.Services
-    .AddSingleton<IShippingAcknowledgementBoxProcessor, ShippingAcknowledgementBoxProcessor>(serviceProvider =>
+    .AddScoped<IShippingAcknowledgementBoxProcessor, ShippingAcknowledgementBoxProcessor>(serviceProvider =>
     {
         var shippingAcknowledgementRepository = serviceProvider.GetRequiredService<IShippingAcknowledgementRepository>();
 
