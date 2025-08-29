@@ -18,7 +18,8 @@ public class ShippingAcknowledgementProcessorTests
 
         _shippingAcknowledgementProcessor = new ShippingAcknowledgementProcessor(
             _shippingAcknowledgementParser,
-            _shippingAcknowledgementBoxProcessor);
+            _shippingAcknowledgementBoxProcessor,
+            1);
     }
 
     [Fact]

@@ -10,6 +10,7 @@ public static class InfrastructureServiceCollectionExtensions
 {
     public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration) =>
         services
+            .AddScoped<IAcknowledgementProcessingOptions, AcknowledgementProcessingOptionsAdapter>()
             .AddScoped<IShippingAcknowledgementRepository, ShippingAcknowledgementRepository>()
             .AddScoped<IShippingAcknowledgementProvider, ShippingAcknowledgementProvider>()
             .AddDbContext<ShippingAcknowledgementContext>(options => 

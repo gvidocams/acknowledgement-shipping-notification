@@ -1,4 +1,4 @@
-namespace ShippingAcknowledgementWorker;
+namespace Infrastructure;
 
 public class AcknowledgementProcessingOptions
 {
