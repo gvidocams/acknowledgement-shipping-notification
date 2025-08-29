@@ -4,8 +4,8 @@ namespace Infrastructure;
 
 public class AcknowledgementProviderOptions
 {
-    public const string SectionName = "AcknowledgementProviderOptions";
-    
-    [Required]
+    public const string SectionName = "ShippingAcknowledgement:Provider";
+
+    [Required] 
     public required string FilePath { get; set; }
 }
