@@ -20,7 +20,7 @@ public class ShippingAcknowledgementWorker(
         {
             logger.LogInformation("{ServiceName} is starting to process it's current interval", nameof(ShippingAcknowledgementWorker));
 
-            using var scope = serviceScopeFactory.CreateScope();
+            using var scope = serviceScopeFactory.CreateScope(); // TODO Investigate if this is the best way on how to dispose of the scope
             var shippingAcknowledgementScanner = scope.ServiceProvider.GetRequiredService<IShippingAcknowledgementScanner>();
             await shippingAcknowledgementScanner.ScanAndDispatchAcknowledgements();
 
