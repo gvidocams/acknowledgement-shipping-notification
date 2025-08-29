@@ -23,7 +23,7 @@ public class ShippingAcknowledgementScannerTests
     }
 
     [Fact]
-    public void ScanAndDispatchAcknowledgements_WhenMultipleAcknowledgementsReturned_ShouldDispatchAll()
+    public async Task ScanAndDispatchAcknowledgements_WhenMultipleAcknowledgementsReturned_ShouldDispatchAll()
     {
         _shippingAcknowledgementProvider.GetShippingAcknowledgementPaths().Returns([
             "FirstAcknowledgement",
@@ -31,12 +31,12 @@ public class ShippingAcknowledgementScannerTests
             "ThirdAcknowledgement"
         ]);
         
-        _shippingAcknowledgementScanner.ScanAndDispatchAcknowledgements();
+        await _shippingAcknowledgementScanner.ScanAndDispatchAcknowledgements();
 
-        _shippingAcknowledgementProcessor.Received(3).ProcessShippingAcknowledgementNotification(Arg.Any<string>());
+        await _shippingAcknowledgementProcessor.Received(3).ProcessShippingAcknowledgementNotification(Arg.Any<string>());
         
-        _shippingAcknowledgementProcessor.Received().ProcessShippingAcknowledgementNotification("FirstAcknowledgement");
-        _shippingAcknowledgementProcessor.Received().ProcessShippingAcknowledgementNotification("SecondAcknowledgement");
-        _shippingAcknowledgementProcessor.Received().ProcessShippingAcknowledgementNotification("ThirdAcknowledgement");
+        await _shippingAcknowledgementProcessor.Received().ProcessShippingAcknowledgementNotification("FirstAcknowledgement");
+        await _shippingAcknowledgementProcessor.Received().ProcessShippingAcknowledgementNotification("SecondAcknowledgement");
+        await _shippingAcknowledgementProcessor.Received().ProcessShippingAcknowledgementNotification("ThirdAcknowledgement");
     }
 }

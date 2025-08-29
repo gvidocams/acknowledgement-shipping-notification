@@ -7,7 +7,7 @@ public class ShippingAcknowledgementScanner(
     IShippingAcknowledgementProcessor shippingAcknowledgementProcessor,
     ILogger<ShippingAcknowledgementScanner> logger) : IShippingAcknowledgementScanner
 {
-    public void ScanAndDispatchAcknowledgements()
+    public async Task ScanAndDispatchAcknowledgements()
     {
         var fileNames = shippingAcknowledgementProvider.GetShippingAcknowledgementPaths();
 
@@ -15,7 +15,7 @@ public class ShippingAcknowledgementScanner(
 
         foreach (var fileName in fileNames)
         {
-            shippingAcknowledgementProcessor.ProcessShippingAcknowledgementNotification(fileName);
+            await shippingAcknowledgementProcessor.ProcessShippingAcknowledgementNotification(fileName);
         }
     }
 }

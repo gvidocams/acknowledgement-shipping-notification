@@ -22,7 +22,7 @@ public class ShippingAcknowledgementWorker(
 
             using var scope = serviceScopeFactory.CreateScope();
             var shippingAcknowledgementScanner = scope.ServiceProvider.GetRequiredService<IShippingAcknowledgementScanner>();
-            shippingAcknowledgementScanner.ScanAndDispatchAcknowledgements();
+            await shippingAcknowledgementScanner.ScanAndDispatchAcknowledgements();
 
             logger.LogInformation("{ServiceName} has completed the current interval", nameof(ShippingAcknowledgementWorker));
         }

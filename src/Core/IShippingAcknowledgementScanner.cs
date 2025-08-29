@@ -2,5 +2,5 @@ namespace Core;
 
 public interface IShippingAcknowledgementScanner
 {
-    void ScanAndDispatchAcknowledgements();
+    Task ScanAndDispatchAcknowledgements();
 }
