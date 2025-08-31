@@ -2,7 +2,7 @@ using System.Threading.Channels;
 using Core.Converters;
 using Core.Models;
 
-namespace Core;
+namespace Core.ShippingAcknowledgements;
 
 public class ShippingAcknowledgementParser : IShippingAcknowledgementParser
 {

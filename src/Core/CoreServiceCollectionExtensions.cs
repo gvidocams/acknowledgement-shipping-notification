@@ -1,3 +1,4 @@
+using Core.ShippingAcknowledgements;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Core;

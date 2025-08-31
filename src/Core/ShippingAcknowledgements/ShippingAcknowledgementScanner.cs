@@ -1,6 +1,6 @@
 using Microsoft.Extensions.Logging;
 
-namespace Core;
+namespace Core.ShippingAcknowledgements;
 
 public class ShippingAcknowledgementScanner(
     IShippingAcknowledgementProvider shippingAcknowledgementProvider,

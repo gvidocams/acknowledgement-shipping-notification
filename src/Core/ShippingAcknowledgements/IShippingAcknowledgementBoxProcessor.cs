@@ -1,7 +1,7 @@
 using System.Threading.Channels;
 using Core.Models;
 
-namespace Core;
+namespace Core.ShippingAcknowledgements;
 
 public interface IShippingAcknowledgementBoxProcessor
 {

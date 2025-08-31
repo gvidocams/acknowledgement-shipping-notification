@@ -1,5 +1,6 @@
 using System.Threading.Channels;
 using Core.Models;
+using Core.ShippingAcknowledgements;
 using NSubstitute;
 
 namespace Core.Tests;

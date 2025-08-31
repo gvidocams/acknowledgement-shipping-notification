@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using Core.ShippingAcknowledgements;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 
 namespace Core.Tests;

@@ -1,5 +1,6 @@
 using System.Threading.Channels;
 using Core.Models;
+using Core.ShippingAcknowledgements;
 using Shouldly;
 
 namespace Core.Tests;

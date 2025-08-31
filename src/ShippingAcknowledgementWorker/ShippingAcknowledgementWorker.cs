@@ -1,4 +1,4 @@
-using Core;
+using Core.ShippingAcknowledgements;
 using Microsoft.Extensions.Options;
 
 namespace ShippingAcknowledgementWorker;
