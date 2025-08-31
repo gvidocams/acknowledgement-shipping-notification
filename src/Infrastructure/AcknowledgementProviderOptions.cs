@@ -8,4 +8,7 @@ public class AcknowledgementProviderOptions
 
     [Required] 
     public required string FilePath { get; set; }
+
+    [Required] 
+    public required string ProcessedFilePath { get; set; }
 }

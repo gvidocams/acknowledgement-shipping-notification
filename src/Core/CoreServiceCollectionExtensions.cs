@@ -11,10 +11,15 @@ public static class CoreServiceCollectionExtensions
             {
                 var shippingAcknowledgementParser = serviceProvider.GetRequiredService<IShippingAcknowledgementParser>();
                 var shippingAcknowledgementBoxProcessor = serviceProvider.GetRequiredService<IShippingAcknowledgementBoxProcessor>();
+                var shippingAcknowledgementProvider = serviceProvider.GetRequiredService<IShippingAcknowledgementProvider>();
 
                 var options = serviceProvider.GetRequiredService<IAcknowledgementProcessingOptions>();
 
-                return new ShippingAcknowledgementProcessor(shippingAcknowledgementParser, shippingAcknowledgementBoxProcessor, options.ChannelCapacitySize);
+                return new ShippingAcknowledgementProcessor(
+                    shippingAcknowledgementParser,
+                    shippingAcknowledgementBoxProcessor,
+                    shippingAcknowledgementProvider,
+                    options.ChannelCapacitySize);
             })
             .AddScoped<IShippingAcknowledgementParser, ShippingAcknowledgementParser>()
             .AddScoped<IShippingAcknowledgementBoxProcessor, ShippingAcknowledgementBoxProcessor>(serviceProvider =>

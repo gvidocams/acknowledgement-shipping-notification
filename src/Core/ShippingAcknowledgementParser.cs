@@ -11,6 +11,7 @@ public class ShippingAcknowledgementParser : IShippingAcknowledgementParser
     
     public async Task ParseShippingAcknowledgementNotification(ChannelWriter<Box> writer, string filePath)
     {
+        //TODO extract streamreader logic since it doesn't belong in Core
         using var reader = new StreamReader(filePath);
         Box? box = null;
 
