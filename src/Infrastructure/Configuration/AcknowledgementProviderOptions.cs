@@ -1,6 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace Infrastructure;
+namespace Infrastructure.Configuration;
 
 public class AcknowledgementProviderOptions
 {

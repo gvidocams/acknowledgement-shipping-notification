@@ -1,7 +1,7 @@
 using Core;
 using Microsoft.Extensions.Options;
 
-namespace Infrastructure;
+namespace Infrastructure.Configuration;
 
 public class AcknowledgementProcessingOptionsAdapter(IOptions<AcknowledgementProcessingOptions> options) : IAcknowledgementProcessingOptions
 {

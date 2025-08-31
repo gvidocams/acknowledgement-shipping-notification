@@ -1,5 +1,6 @@
 using Core;
 using Infrastructure;
+using Infrastructure.Configuration;
 using ShippingAcknowledgementWorker;
 
 var builder = Host.CreateApplicationBuilder(args);

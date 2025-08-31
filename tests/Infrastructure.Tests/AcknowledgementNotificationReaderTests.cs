@@ -1,3 +1,4 @@
+using Infrastructure.ShippingAcknowledgementNotifications;
 using Shouldly;
 
 namespace Infrastructure.Tests;

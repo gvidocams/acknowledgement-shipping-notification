@@ -1,7 +1,8 @@
 using Core;
+using Infrastructure.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Infrastructure;
+namespace Infrastructure.ShippingAcknowledgementNotifications;
 
 //TODO Add integration tests
 public class ShippingAcknowledgementProvider(IOptions<AcknowledgementProviderOptions> acknowledgementProviderOptions) : IShippingAcknowledgementProvider

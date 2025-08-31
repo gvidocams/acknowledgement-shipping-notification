@@ -1,4 +1,4 @@
-namespace Infrastructure;
+namespace Infrastructure.Configuration;
 
 public class AcknowledgementProcessingOptions
 {

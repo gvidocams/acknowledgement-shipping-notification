@@ -1,5 +1,7 @@
 using Core;
+using Infrastructure.Configuration;
 using Infrastructure.Persistence;
+using Infrastructure.ShippingAcknowledgementNotifications;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

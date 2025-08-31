@@ -1,6 +1,6 @@
 using Core;
 
-namespace Infrastructure;
+namespace Infrastructure.ShippingAcknowledgementNotifications;
 
 public class AcknowledgementNotificationReader : IAcknowledgementNotificationReader
 {
