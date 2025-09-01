@@ -5,5 +5,5 @@ namespace Core.ShippingAcknowledgements;
 
 public interface IShippingAcknowledgementBoxProcessor
 {
-    Task SaveShippingAcknowledgementBoxes(ChannelReader<Box> reader);
+    Task SaveShippingAcknowledgementBoxesAsync(ChannelReader<Box> reader);
 }

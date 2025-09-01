@@ -8,7 +8,7 @@ public class ShippingAcknowledgementRepository(ShippingAcknowledgementContext sh
     : IShippingAcknowledgementRepository
 {
     //TODO Add integration tests
-    public async Task SaveBoxes(List<Box> boxes)
+    public async Task SaveBoxesAsync(List<Box> boxes)
     {
         //TODO Add error handling if uploading the data fails
         var boxEntities = boxes.Select(box => box.ToBoxEntity()).ToList();

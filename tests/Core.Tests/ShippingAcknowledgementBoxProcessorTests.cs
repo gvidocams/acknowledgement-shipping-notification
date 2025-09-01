@@ -19,7 +19,7 @@ public class ShippingAcknowledgementBoxProcessorTests
     }
 
     [Fact]
-    public async Task SaveShippingAcknowledgementBoxes_WhenBatchSizeIsTheSameAsBoxCount_ShouldSaveTheFullBatch()
+    public async Task SaveShippingAcknowledgementBoxesAsync_WhenBatchSizeIsTheSameAsBoxCount_ShouldSaveTheFullBatch()
     {
         var channel = Channel.CreateUnbounded<Box>();
 
@@ -31,14 +31,14 @@ public class ShippingAcknowledgementBoxProcessorTests
 
         channel.Writer.Complete();
 
-        await _shippingAcknowledgementBoxProcessor.SaveShippingAcknowledgementBoxes(channel.Reader);
+        await _shippingAcknowledgementBoxProcessor.SaveShippingAcknowledgementBoxesAsync(channel.Reader);
 
-        await _shippingAcknowledgementRepository.Received(1).SaveBoxes(Arg.Any<List<Box>>());
-        await _shippingAcknowledgementRepository.Received(1).SaveBoxes(Arg.Is<List<Box>>(x => x.SequenceEqual(new[] { box1, box2 })));
+        await _shippingAcknowledgementRepository.Received(1).SaveBoxesAsync(Arg.Any<List<Box>>());
+        await _shippingAcknowledgementRepository.Received(1).SaveBoxesAsync(Arg.Is<List<Box>>(x => x.SequenceEqual(new[] { box1, box2 })));
     }
 
     [Fact]
-    public async Task SaveShippingAcknowledgementBoxes_WhenBatchSizeNotDivisibleByBoxCount_ShouldSaveTheLastIncompleteBatch()
+    public async Task SaveShippingAcknowledgementBoxesAsync_WhenBatchSizeNotDivisibleByBoxCount_ShouldSaveTheLastIncompleteBatch()
     {
         var channel = Channel.CreateUnbounded<Box>();
 
@@ -52,10 +52,10 @@ public class ShippingAcknowledgementBoxProcessorTests
 
         channel.Writer.Complete();
 
-        await _shippingAcknowledgementBoxProcessor.SaveShippingAcknowledgementBoxes(channel.Reader);
+        await _shippingAcknowledgementBoxProcessor.SaveShippingAcknowledgementBoxesAsync(channel.Reader);
 
-        await _shippingAcknowledgementRepository.Received(2).SaveBoxes(Arg.Any<List<Box>>());
-        await _shippingAcknowledgementRepository.Received(1).SaveBoxes(Arg.Is<List<Box>>(x => x.SequenceEqual(new[] { box1, box2 })));
-        await _shippingAcknowledgementRepository.Received(1).SaveBoxes(Arg.Is<List<Box>>(x => x.SequenceEqual(new[] { box3 })));
+        await _shippingAcknowledgementRepository.Received(2).SaveBoxesAsync(Arg.Any<List<Box>>());
+        await _shippingAcknowledgementRepository.Received(1).SaveBoxesAsync(Arg.Is<List<Box>>(x => x.SequenceEqual(new[] { box1, box2 })));
+        await _shippingAcknowledgementRepository.Received(1).SaveBoxesAsync(Arg.Is<List<Box>>(x => x.SequenceEqual(new[] { box3 })));
     }
 }

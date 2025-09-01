@@ -13,8 +13,8 @@ public class ShippingAcknowledgementProcessor(
     {
         var channel = Channel.CreateBounded<Box>(channelCapacity);
 
-        var acknowledgementWriterTask = shippingAcknowledgementParser.ParseShippingAcknowledgementNotification(channel.Writer, notificationLocation);
-        var batchProcessorTask = shippingAcknowledgementBoxProcessor.SaveShippingAcknowledgementBoxes(channel.Reader);
+        var acknowledgementWriterTask = shippingAcknowledgementParser.ParseShippingAcknowledgementNotificationAsync(channel.Writer, notificationLocation);
+        var batchProcessorTask = shippingAcknowledgementBoxProcessor.SaveShippingAcknowledgementBoxesAsync(channel.Reader);
 
         await Task.WhenAll(acknowledgementWriterTask, batchProcessorTask);
 

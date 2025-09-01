@@ -19,17 +19,17 @@ public class ShippingAcknowledgementParserTests
     }
 
     [Fact]
-    public async Task ParseShippingAcknowledgementNotification_WhenParsingFinished_ChannelShouldBeCompleted()
+    public async Task ParseShippingAcknowledgementNotificationAsync_WhenParsingFinished_ChannelShouldBeCompleted()
     {
         var channel = Channel.CreateUnbounded<Box>();
 
-        await _shippingAcknowledgementParser.ParseShippingAcknowledgementNotification(channel.Writer, string.Empty);
+        await _shippingAcknowledgementParser.ParseShippingAcknowledgementNotificationAsync(channel.Writer, string.Empty);
 
         channel.Writer.TryComplete().ShouldBeFalse();
     }
 
     [Fact]
-    public async Task ParseShippingAcknowledgementNotification_WhenMultipleShippingAcknowledgements_ShouldParseAndWriteAllAcknowledgements()
+    public async Task ParseShippingAcknowledgementNotificationAsync_WhenMultipleShippingAcknowledgements_ShouldParseAndWriteAllAcknowledgements()
     {
         const string notificationLocation = "NotificationPath";
 
@@ -58,7 +58,7 @@ public class ShippingAcknowledgementParserTests
 
         _acknowledgementNotificationReader.ReadNotificationLinesAsync(notificationLocation).Returns(notificationLines);
 
-        await _shippingAcknowledgementParser.ParseShippingAcknowledgementNotification(channel.Writer, notificationLocation);
+        await _shippingAcknowledgementParser.ParseShippingAcknowledgementNotificationAsync(channel.Writer, notificationLocation);
 
         var expectedBoxes = await channel.Reader.ReadAllAsync().ToListAsync();
         expectedBoxes.Count.ShouldBe(3);

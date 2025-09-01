@@ -35,10 +35,10 @@ public class ShippingAcknowledgementProcessorTests
 
         await _shippingAcknowledgementParser
             .Received(1)
-            .ParseShippingAcknowledgementNotification(Arg.Any<ChannelWriter<Box>>(), notificationLocation);
+            .ParseShippingAcknowledgementNotificationAsync(Arg.Any<ChannelWriter<Box>>(), notificationLocation);
         await _shippingAcknowledgementBoxProcessor
             .Received(1)
-            .SaveShippingAcknowledgementBoxes(Arg.Any<ChannelReader<Box>>());
+            .SaveShippingAcknowledgementBoxesAsync(Arg.Any<ChannelReader<Box>>());
 
         _shippingAcknowledgementProvider
             .Received(1)

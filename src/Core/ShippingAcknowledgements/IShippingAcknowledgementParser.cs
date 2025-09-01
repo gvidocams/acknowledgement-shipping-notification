@@ -5,5 +5,5 @@ namespace Core.ShippingAcknowledgements;
 
 public interface IShippingAcknowledgementParser
 {
-    Task ParseShippingAcknowledgementNotification(ChannelWriter<Box> writer, string notificationLocation);
+    Task ParseShippingAcknowledgementNotificationAsync(ChannelWriter<Box> writer, string notificationLocation);
 }

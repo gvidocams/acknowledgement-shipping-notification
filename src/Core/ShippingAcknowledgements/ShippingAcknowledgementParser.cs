@@ -10,7 +10,7 @@ public class ShippingAcknowledgementParser(IAcknowledgementNotificationReader ac
     private const string BoxIdentifier = "HDR";
     private const string ProductIdentifier = "LINE";
 
-    public async Task ParseShippingAcknowledgementNotification(ChannelWriter<Box> writer, string notificationLocation)
+    public async Task ParseShippingAcknowledgementNotificationAsync(ChannelWriter<Box> writer, string notificationLocation)
     {
         Box? box = null;
 
