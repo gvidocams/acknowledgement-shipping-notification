@@ -1,41 +1,67 @@
 using System.Threading.Channels;
 using Core.Models;
 using Core.ShippingAcknowledgements;
+using NSubstitute;
 using Shouldly;
 
 namespace Core.Tests;
 
 public class ShippingAcknowledgementParserTests
 {
-    private readonly ShippingAcknowledgementParser _shippingAcknowledgementParser = new();
+    private readonly ShippingAcknowledgementParser _shippingAcknowledgementParser;
+    private readonly IAcknowledgementNotificationReader _acknowledgementNotificationReader;
+
+    public ShippingAcknowledgementParserTests()
+    {
+        _acknowledgementNotificationReader = Substitute.For<IAcknowledgementNotificationReader>();
+
+        _shippingAcknowledgementParser = new ShippingAcknowledgementParser(_acknowledgementNotificationReader);
+    }
 
     [Fact]
     public async Task ParseShippingAcknowledgementNotification_WhenParsingFinished_ChannelShouldBeCompleted()
     {
         var channel = Channel.CreateUnbounded<Box>();
 
-        await _shippingAcknowledgementParser.ParseShippingAcknowledgementNotification(channel.Writer,
-            "./Data/multiple-boxes.txt");
+        await _shippingAcknowledgementParser.ParseShippingAcknowledgementNotification(channel.Writer, string.Empty);
 
         channel.Writer.TryComplete().ShouldBeFalse();
     }
 
     [Fact]
-    public async Task ParseShippingAcknowledgementNotification_WhenParsingStarted_ChannelShouldBeCompleted()
+    public async Task ParseShippingAcknowledgementNotification_WhenMultipleShippingAcknowledgements_ShouldParseAndWriteAllAcknowledgements()
     {
+        const string notificationLocation = "NotificationPath";
+
         var channel = Channel.CreateUnbounded<Box>();
 
-        await _shippingAcknowledgementParser.ParseShippingAcknowledgementNotification(channel.Writer,
-            "./Data/multiple-boxes.txt");
-
-        channel.Reader.Count.ShouldBe(3);
-
-        var expectedBoxes = new List<Box>();
-
-        await foreach (var box in channel.Reader.ReadAllAsync())
+        var notificationLines = new List<string>
         {
-            expectedBoxes.Add(box);
-        }
+            "HDR  TRSP117                                                                                     6874453I                           ",
+            "",
+            "LINE P000001661                           9781473663800                     12     ",
+            "",
+            "LINE P000001661                           9781473667273                     2      ",
+            "",
+            "LINE P000001661                           9781473665798                     1      ",
+            "",
+            "HDR  TRSP117                                                                                     6874454I                           ",
+            "",
+            "LINE G000009810                           9781473669987                     1      ",
+            "",
+            "LINE G000009810                           9781473661905                     1      ",
+            "",
+            "HDR  TRSP117                                                                                     6874473I                           ",
+            "",
+            "LINE G000009809                           9781473676978                     1      "
+        }.ToAsyncEnumerable();
+
+        _acknowledgementNotificationReader.ReadNotificationLinesAsync(notificationLocation).Returns(notificationLines);
+
+        await _shippingAcknowledgementParser.ParseShippingAcknowledgementNotification(channel.Writer, notificationLocation);
+
+        var expectedBoxes = await channel.Reader.ReadAllAsync().ToListAsync();
+        expectedBoxes.Count.ShouldBe(3);
 
         expectedBoxes.ShouldBeEquivalentTo(new List<Box>
         {
