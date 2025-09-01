@@ -9,6 +9,7 @@ public class ShippingAcknowledgementScanner(
 {
     public async Task ScanAndDispatchAcknowledgements()
     {
+        //TODO Add error handling and logging for cases when getting the notifications fails
         var notificationLocations = shippingAcknowledgementProvider.GetShippingAcknowledgementNotificationLocations();
 
         logger.LogInformation("Found {NotificationCount} acknowledgement notifications", notificationLocations.Count);
