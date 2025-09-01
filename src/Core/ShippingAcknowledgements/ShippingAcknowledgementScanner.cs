@@ -9,24 +9,24 @@ public class ShippingAcknowledgementScanner(
 {
     public async Task ScanAndDispatchAcknowledgements()
     {
-        var fileNames = shippingAcknowledgementProvider.GetShippingAcknowledgementPaths();
+        var notificationLocations = shippingAcknowledgementProvider.GetShippingAcknowledgementNotificationLocations();
 
-        logger.LogInformation("Found {AcknowledgementCount} acknowledgements", fileNames.Count);
+        logger.LogInformation("Found {NotificationCount} acknowledgement notifications", notificationLocations.Count);
 
-        foreach (var fileName in fileNames)
+        foreach (var notificationLocation in notificationLocations)
         {
-            using var scope = logger.BeginScope("Acknowledgement notification: {FileName}", fileName);
+            using var scope = logger.BeginScope("Acknowledgement notification: {NotificationLocation}", notificationLocation);
             try
             {
-                logger.LogInformation("Processing shipping acknowledgement notification {FileName}", fileName);
+                logger.LogInformation("Processing shipping acknowledgement notification {NotificationLocation}", notificationLocation);
 
-                await shippingAcknowledgementProcessor.ProcessShippingAcknowledgementNotification(fileName);
+                await shippingAcknowledgementProcessor.ProcessShippingAcknowledgementNotification(notificationLocation);
 
-                logger.LogInformation("Finished processing acknowledgement notification {FileName}", fileName);
+                logger.LogInformation("Finished processing acknowledgement notification {NotificationLocation}", notificationLocation);
             }
             catch (Exception exception)
             {
-                logger.LogError(exception, "An error occured while processing acknowledgement notification {FileName}", fileName);
+                logger.LogError(exception, "An error occured while processing acknowledgement notification {NotificationLocation}", notificationLocation);
             }
         }
     }

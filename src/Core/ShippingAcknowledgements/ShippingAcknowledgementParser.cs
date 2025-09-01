@@ -10,11 +10,11 @@ public class ShippingAcknowledgementParser(IAcknowledgementNotificationReader ac
     private const string BoxIdentifier = "HDR";
     private const string ProductIdentifier = "LINE";
 
-    public async Task ParseShippingAcknowledgementNotification(ChannelWriter<Box> writer, string filePath)
+    public async Task ParseShippingAcknowledgementNotification(ChannelWriter<Box> writer, string notificationLocation)
     {
         Box? box = null;
 
-        await foreach (var line in acknowledgementNotificationReader.ReadNotificationLinesAsync(filePath))
+        await foreach (var line in acknowledgementNotificationReader.ReadNotificationLinesAsync(notificationLocation))
         {
             if (line.StartsWith(BoxIdentifier))
             {
