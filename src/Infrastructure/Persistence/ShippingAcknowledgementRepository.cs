@@ -1,5 +1,6 @@
 using Core;
 using Core.Models;
+using EFCore.BulkExtensions;
 using Infrastructure.Persistence.Converters;
 
 namespace Infrastructure.Persistence;
@@ -12,8 +13,6 @@ public class ShippingAcknowledgementRepository(ShippingAcknowledgementContext sh
     {
         var boxEntities = boxes.Select(box => box.ToBoxEntity());
 
-        //TODO investigate if this is the best option for bulk insertions
-        await shippingAcknowledgementContext.Boxes.AddRangeAsync(boxEntities);
-        await shippingAcknowledgementContext.SaveChangesAsync();
+        await shippingAcknowledgementContext.BulkInsertAsync(boxEntities);
     }
 }
