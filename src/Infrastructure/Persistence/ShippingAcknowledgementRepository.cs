@@ -13,6 +13,6 @@ public class ShippingAcknowledgementRepository(ShippingAcknowledgementContext sh
     {
         var boxEntities = boxes.Select(box => box.ToBoxEntity());
 
-        await shippingAcknowledgementContext.BulkInsertAsync(boxEntities);
+        await shippingAcknowledgementContext.BulkInsertAsync(boxEntities, config => config.IncludeGraph = true);
     }
 }
