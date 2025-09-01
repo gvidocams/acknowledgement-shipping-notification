@@ -15,6 +15,7 @@ public static class InfrastructureServiceCollectionExtensions
             .AddScoped<IAcknowledgementProcessingOptions, AcknowledgementProcessingOptionsAdapter>()
             .AddScoped<IShippingAcknowledgementRepository, ShippingAcknowledgementRepository>()
             .AddScoped<IShippingAcknowledgementProvider, ShippingAcknowledgementProvider>()
+            .AddScoped<IAcknowledgementNotificationReader, AcknowledgementNotificationReader>()
             .AddDbContext<ShippingAcknowledgementContext>(options => 
                 options.UseSqlite(configuration.GetConnectionString("ShippingAcknowledgementDatabase")));
 }
