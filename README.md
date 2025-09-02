@@ -40,19 +40,23 @@ The application will load the data every x seconds (by default, it's 5) into the
 During analysis, I found there were two potential solutions, using
 
 - FileSystemWatcher
+
   Pros:
     - Real-time notifications about changes in a directory.
-      Cons:
+
+  Cons:
     - According to the documentation, the OS notifies the component of file changes in a buffer that's created by the
       FileSystemWatcher and
       if there are many changes in a short time, the buffer can overflow and we can lose track of
       changes. https://learn.microsoft.com/en-us/dotnet/api/system.io.internalbufferoverflowexception?view=net-9.0
     - In case of downtime, any existing files would not be picked up
 - Periodically scanning for files
+
   Pros:
     - The service would work even when a lot of files are being added in the directory
     - The service could pick up the missing files after a downtime
-      Cons:
+
+  Cons:
     - The files wouldn't be picked up instantly
 
 For this solution, I went forward with **Periodically scanning for files** because if there isn't a requirement to react

@@ -15,8 +15,8 @@ builder.Services.AddOptionsWithValidateOnStart<AcknowledgementProviderOptions>()
 
 builder.Services.AddOptionsWithValidateOnStart<AcknowledgementProcessingOptions>()
     .Bind(builder.Configuration.GetSection(AcknowledgementProcessingOptions.SectionName))
-    .Validate(options => options.BatchSize >= 0, "Batch size must be greater than zero")
-    .Validate(options => options.ChannelCapacitySize >= 0, "Channel capacity size must be greater than zero")
+    .Validate(options => options.BatchSize > 0, "Batch size must be greater than zero")
+    .Validate(options => options.ChannelCapacitySize > 0, "Channel capacity size must be greater than zero")
     .Validate(options => options.ChannelCapacitySize > options.BatchSize, "Channel capacity size must exceed batch size");
 
 builder.Services
