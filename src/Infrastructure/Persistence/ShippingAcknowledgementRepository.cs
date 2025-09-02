@@ -8,12 +8,17 @@ public class ShippingAcknowledgementRepository(ShippingAcknowledgementContext sh
     : IShippingAcknowledgementRepository
 {
     //TODO Add integration tests
-    public async Task SaveBoxes(List<Box> boxes)
+    public async Task SaveBoxesAsync(List<Box> boxes)
     {
-        var boxEntities = boxes.Select(box => box.ToBoxEntity());
+        //TODO Add error handling if uploading the data fails
+        var boxEntities = boxes.Select(box => box.ToBoxEntity()).ToList();
 
-        //TODO investigate if this is the best option for bulk insertions
-        await shippingAcknowledgementContext.Boxes.AddRangeAsync(boxEntities);
+        await using var transaction = await shippingAcknowledgementContext.Database.BeginTransactionAsync();
+
+        await shippingAcknowledgementContext.AddRangeAsync(boxEntities);
         await shippingAcknowledgementContext.SaveChangesAsync();
+
+        shippingAcknowledgementContext.ChangeTracker.Clear();
+        await transaction.CommitAsync();
     }
 }

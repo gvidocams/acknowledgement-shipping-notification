@@ -10,30 +10,28 @@ public class ShippingAcknowledgementParser(IAcknowledgementNotificationReader ac
     private const string BoxIdentifier = "HDR";
     private const string ProductIdentifier = "LINE";
 
-    public async Task ParseShippingAcknowledgementNotification(ChannelWriter<Box> writer, string filePath)
+    public async Task ParseShippingAcknowledgementNotificationAsync(ChannelWriter<Box> writer, string notificationLocation)
     {
         Box? box = null;
 
-        await foreach (var line in acknowledgementNotificationReader.ReadNotificationLinesAsync(filePath))
+        await foreach (var line in acknowledgementNotificationReader.ReadNotificationLinesAsync(notificationLocation))
         {
-            while (await writer.WaitToWriteAsync())
+            if (line.StartsWith(BoxIdentifier))
             {
-                if (line.StartsWith(BoxIdentifier))
+                if (box is not null && await writer.WaitToWriteAsync())
                 {
-                    if (box is not null)
-                    {
-                        await writer.WriteAsync(box);
-                    }
+                    await writer.WriteAsync(box);
+                }
 
-                    // TODO Create error handling if couldn't parse the box
-                    box = BoxConverter.ToBox(line);
-                }
-                else if (line.StartsWith(ProductIdentifier))
-                {
-                    // TODO Create error handling for cases when a line has been found before a box
-                    // TODO Create error handling if couldn't parse the line
-                    box?.Contents.Add(ContentConverter.ToContent(line));
-                }
+                // TODO Create error handling if couldn't parse the box
+                // TODO Create validations for box line
+                box = BoxConverter.ToBox(line);
+            }
+            else if (line.StartsWith(ProductIdentifier))
+            {
+                // TODO Create error handling for cases when a line has been found before a box
+                // TODO Create validations for content line
+                box?.Contents.Add(ContentConverter.ToContent(line));
             }
         }
 

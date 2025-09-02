@@ -6,8 +6,7 @@ namespace Core.ShippingAcknowledgements;
 public class ShippingAcknowledgementBoxProcessor(IShippingAcknowledgementRepository shippingAcknowledgementRepository, int batchSize)
     : IShippingAcknowledgementBoxProcessor
 {
-    //TODO Rename all async methods with async suffix
-    public async Task SaveShippingAcknowledgementBoxes(ChannelReader<Box> reader)
+    public async Task SaveShippingAcknowledgementBoxesAsync(ChannelReader<Box> reader)
     {
         var batch = new List<Box>();
 
@@ -17,13 +16,13 @@ public class ShippingAcknowledgementBoxProcessor(IShippingAcknowledgementReposit
 
             if (batch.Count < batchSize) continue;
 
-            await shippingAcknowledgementRepository.SaveBoxes([..batch]);
+            await shippingAcknowledgementRepository.SaveBoxesAsync([..batch]);
             batch.Clear();
         }
 
         if (batch.Count != 0)
         {
-            await shippingAcknowledgementRepository.SaveBoxes(batch);
+            await shippingAcknowledgementRepository.SaveBoxesAsync(batch);
         }
     }
 }

@@ -26,7 +26,7 @@ public class ShippingAcknowledgementScannerTests
     [Fact]
     public async Task ScanAndDispatchAcknowledgements_WhenMultipleAcknowledgementsReturned_ShouldDispatchAll()
     {
-        _shippingAcknowledgementProvider.GetShippingAcknowledgementPaths().Returns([
+        _shippingAcknowledgementProvider.GetShippingAcknowledgementNotificationLocations().Returns([
             "FirstAcknowledgement",
             "SecondAcknowledgement",
             "ThirdAcknowledgement"

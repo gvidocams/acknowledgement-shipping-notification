@@ -4,5 +4,5 @@ namespace Core;
 
 public interface IShippingAcknowledgementRepository
 {
-    Task SaveBoxes(List<Box> boxes);
+    Task SaveBoxesAsync(List<Box> boxes);
 }

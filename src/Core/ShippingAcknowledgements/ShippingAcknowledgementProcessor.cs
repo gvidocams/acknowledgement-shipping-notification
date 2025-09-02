@@ -9,15 +9,15 @@ public class ShippingAcknowledgementProcessor(
     IShippingAcknowledgementProvider shippingAcknowledgementProvider,
     int channelCapacity) : IShippingAcknowledgementProcessor
 {
-    public async Task ProcessShippingAcknowledgementNotification(string filePath)
+    public async Task ProcessShippingAcknowledgementNotification(string notificationLocation)
     {
         var channel = Channel.CreateBounded<Box>(channelCapacity);
 
-        var acknowledgementWriterTask = shippingAcknowledgementParser.ParseShippingAcknowledgementNotification(channel.Writer, filePath);
-        var batchProcessorTask = shippingAcknowledgementBoxProcessor.SaveShippingAcknowledgementBoxes(channel.Reader);
+        var acknowledgementWriterTask = shippingAcknowledgementParser.ParseShippingAcknowledgementNotificationAsync(channel.Writer, notificationLocation);
+        var batchProcessorTask = shippingAcknowledgementBoxProcessor.SaveShippingAcknowledgementBoxesAsync(channel.Reader);
 
         await Task.WhenAll(acknowledgementWriterTask, batchProcessorTask);
 
-        shippingAcknowledgementProvider.CompleteShippingAcknowledgementNotification(filePath);
+        shippingAcknowledgementProvider.CompleteShippingAcknowledgementNotification(notificationLocation);
     }
 }

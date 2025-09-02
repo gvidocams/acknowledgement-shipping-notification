@@ -9,14 +9,14 @@ public class ShippingAcknowledgementProvider(IOptions<AcknowledgementProviderOpt
 {
     private readonly AcknowledgementProviderOptions _acknowledgementProviderOptions = acknowledgementProviderOptions.Value;
 
-    public List<string> GetShippingAcknowledgementPaths() =>
+    public List<string> GetShippingAcknowledgementNotificationLocations() =>
         Directory
             .GetFiles(_acknowledgementProviderOptions.FilePath)
             .ToList();
 
-    public void CompleteShippingAcknowledgementNotification(string filePath)
+    public void CompleteShippingAcknowledgementNotification(string notificationLocation)
     {
         // TODO Add failure handling
-        File.Move(filePath, _acknowledgementProviderOptions.ProcessedFilePath + Path.GetFileName(filePath));
+        File.Move(notificationLocation, _acknowledgementProviderOptions.ProcessedFilePath + Path.GetFileName(notificationLocation));
     }
 }
